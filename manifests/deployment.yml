@@ -1,0 +1,25 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: minimalapisuportesqlserver 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minimalapisuportesqlserver
+  template:
+    metadata:
+      labels:
+        app: minimalapisuportesqlserver 
+    spec:
+      containers:
+        - name: minimalapisuportesqlserver 
+          image: resource.azurecr.io/minimalapisuportesqlserver
+          ports:
+          - containerPort: 80
+          env:
+          - name: ConnectionStrings__BaseSuporte
+            valueFrom:
+              secretKeyRef:
+                name: apisuporte-secret
+                key: SqlServerConnection
